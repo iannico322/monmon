@@ -34,15 +34,17 @@
   .home-title span:nth-child(4n){animation-delay:.9s;color:var(--green);}
   @keyframes wiggle{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-8px) rotate(2deg)}}
   .home-sub{text-align:center;font-size:clamp(15px,4vw,20px);color:#8a7a72;margin-bottom:10px;}
-  .menu{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 18px 22px;align-content:center;max-width:560px;margin:0 auto;width:100%;}
-  .tile{border:none;border-radius:34px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:22px 10px;color:#fff;font-family:inherit;box-shadow:0 10px 0 rgba(0,0,0,.12),0 16px 30px rgba(0,0,0,.16);transition:transform .12s ease, box-shadow .12s ease;aspect-ratio:1/.92;}
+  .menu{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:8px 18px 22px;align-content:center;max-width:560px;margin:0 auto;width:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .tile{border:none;border-radius:30px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:18px 10px;color:#fff;font-family:inherit;box-shadow:0 9px 0 rgba(0,0,0,.12),0 14px 26px rgba(0,0,0,.16);transition:transform .12s ease, box-shadow .12s ease;aspect-ratio:1/.78;}
   .tile:active{transform:translateY(8px);box-shadow:0 2px 0 rgba(0,0,0,.12),0 6px 14px rgba(0,0,0,.16);}
-  .tile .emo{font-size:clamp(44px,13vw,72px);line-height:1;filter:drop-shadow(0 4px 4px rgba(0,0,0,.18));}
-  .tile .lbl{font-size:clamp(20px,6vw,30px);font-weight:600;text-shadow:0 2px 0 rgba(0,0,0,.15);}
+  .tile .emo{font-size:clamp(38px,11vw,62px);line-height:1;filter:drop-shadow(0 4px 4px rgba(0,0,0,.18));}
+  .tile .lbl{font-size:clamp(18px,5.5vw,28px);font-weight:600;text-shadow:0 2px 0 rgba(0,0,0,.15);}
   .t-abc{background:linear-gradient(160deg,#ff7eb6,#ff5a5f);}
   .t-123{background:linear-gradient(160deg,#4d9de0,#4361ee);}
   .t-col{background:linear-gradient(160deg,#ffd23f,#ff9f43);}
   .t-ani{background:linear-gradient(160deg,#3ec96f,#2a9d8f);}
+  .t-shp{background:linear-gradient(160deg,#a06cd5,#7048b6);}
+  .t-look{background:linear-gradient(160deg,#3a2e2a,#5a4a44);}
 
   .bar{display:flex;align-items:center;gap:10px;padding:14px 16px;}
   .back{border:none;background:#fff;color:var(--ink);font-family:inherit;font-weight:600;font-size:22px;width:58px;height:58px;border-radius:20px;cursor:pointer;flex:0 0 auto;box-shadow:0 5px 0 rgba(0,0,0,.12);transition:transform .1s ease;}
@@ -67,6 +69,25 @@
   .arrow.prev{background:var(--purple);}.arrow.next{background:var(--green);}
   .dot-i{font-size:18px;color:#9c8d85;font-weight:600;min-width:64px;text-align:center;}
   .swatch{width:clamp(150px,46vw,230px);height:clamp(150px,46vw,230px);border-radius:50%;box-shadow:inset 0 -10px 20px rgba(0,0,0,.18),0 8px 20px rgba(0,0,0,.2);}
+  .shapebox{width:clamp(160px,48vw,250px);height:clamp(160px,48vw,250px);filter:drop-shadow(0 10px 14px rgba(0,0,0,.18));}
+  .shapebox svg{width:100%;height:100%;display:block;}
+  .g-shape{width:clamp(46px,12vw,60px);height:clamp(46px,12vw,60px);display:block;}
+  .g-shape svg{width:100%;height:100%;display:block;}
+
+  /* ---------- Look & Follow (high-contrast visual stimulation) ---------- */
+  .vstage{flex:1;position:relative;overflow:hidden;margin:0 14px;border-radius:28px;background:#fff;box-shadow:inset 0 0 0 3px #eadfce,0 10px 24px rgba(0,0,0,.12);}
+  .vtarget{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(130px,44vw,250px);height:clamp(130px,44vw,250px);}
+  .vtarget.moving{animation:drift 18s ease-in-out infinite;}
+  @keyframes drift{0%{left:14%;top:22%}25%{left:78%;top:30%}50%{left:62%;top:74%}75%{left:20%;top:64%}100%{left:14%;top:22%}}
+  .vtarget svg{width:100%;height:100%;display:block;animation:vpulse 3.2s ease-in-out infinite;}
+  @keyframes vpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  .vcaption{text-align:center;font-size:13px;color:#9c8d85;padding:8px 16px 2px;line-height:1.35;}
+  .vpicker{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:10px 16px 20px;}
+  .vbtn{border:none;background:#fff;border-radius:16px;padding:6px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.12);width:56px;height:56px;display:flex;align-items:center;justify-content:center;transition:transform .1s ease;}
+  .vbtn:active{transform:translateY(4px);box-shadow:0 0 0 rgba(0,0,0,.12);}
+  .vbtn.sel{outline:3px solid var(--green);outline-offset:1px;}
+  .vprev{width:44px;height:44px;display:block;border-radius:10px;overflow:hidden;}
+  .vprev svg{width:100%;height:100%;display:block;}
 
   .gridwrap{flex:1;overflow-y:auto;padding:6px 16px 24px;-webkit-overflow-scrolling:touch;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:14px;max-width:640px;margin:0 auto;}
@@ -131,6 +152,8 @@
       <button class="tile t-123" onclick="openSection('num')"><span class="emo">🔢</span><span class="lbl">123</span></button>
       <button class="tile t-col" onclick="openSection('col')"><span class="emo">🎨</span><span class="lbl">Colors</span></button>
       <button class="tile t-ani" onclick="openSection('ani')"><span class="emo">🐾</span><span class="lbl">Animals</span></button>
+      <button class="tile t-shp" onclick="openSection('shp')"><span class="emo">🔷</span><span class="lbl">Shapes</span></button>
+      <button class="tile t-look" onclick="openVisual()"><span class="emo">👀</span><span class="lbl">Look &amp; Follow</span></button>
     </div>
   </section>
 
@@ -149,6 +172,18 @@
       </div>
     </div>
     <div id="gridmode" class="gridwrap" style="display:none;"><div class="grid" id="grid"></div></div>
+  </section>
+
+  <!-- Look & Follow: high-contrast visual stimulation -->
+  <section class="screen" id="visual">
+    <div class="bar">
+      <button class="back" onclick="goHome()">⬅</button>
+      <h2>Look &amp; Follow</h2>
+      <button class="viewtoggle" onclick="toggleMotion()"><span class="vt-ico" id="motIco">⏸️</span><span id="motTxt">Pause</span></button>
+    </div>
+    <div class="vstage" id="vstage"><div class="vtarget moving" id="vtarget"></div></div>
+    <p class="vcaption">Hold baby about 20–30&nbsp;cm away. Bold black-and-white patterns help develop newborn eyesight 👶</p>
+    <div class="vpicker" id="vpicker"></div>
   </section>
 
   <!-- settings -->
@@ -207,14 +242,31 @@ const ABC=[["A","Apple","🍎"],["B","Ball","⚽"],["C","Cat","🐱"],["D","Dog"
 const NUM=[[1,"one","🍓"],[2,"two","🐤"],[3,"three","🎈"],[4,"four","🍪"],[5,"five","⭐"],[6,"six","🐠"],[7,"seven","🌸"],[8,"eight","🐝"],[9,"nine","🍇"],[10,"ten","🚗"]];
 const COL=[["Red","#ff3b30","🍎"],["Orange","#ff9500","🍊"],["Yellow","#ffcc00","🌟"],["Green","#34c759","🐸"],["Blue","#0a84ff","🌊"],["Purple","#af52de","🍇"],["Pink","#ff6eb4","🌸"],["Brown","#a05a2c","🐻"],["Black","#2b2b2b","🐧"],["White","#f4f4f4","☁️"]];
 const ANI=[["Dog","🐶","Woof woof! Awooo!"],["Cat","🐱","Meow! Purr, purr."],["Cow","🐮","Moooo! Moooo!"],["Duck","🦆","Quack quack quack!"],["Sheep","🐑","Baaaa! Baaa!"],["Lion","🦁","Roarrr! Grrr!"],["Pig","🐷","Oink oink! Snort snort!"],["Frog","🐸","Ribbit! Croak, croak!"],["Bee","🐝","Bzzzz! Buzz buzz!"],["Horse","🐴","Neigh! Neighhh!"],["Owl","🦉","Hoo hoo! Whooo!"],["Chicken","🐔","Cluck cluck! Bawk bawk!"]];
-const sets={abc:ABC,num:NUM,col:COL,ani:ANI};
-const titles={abc:'A B C',num:'1 2 3',col:'Colors',ani:'Animals'};
+const SHP=[["Circle","circle","#ff5a5f"],["Square","square","#4d9de0"],["Triangle","triangle","#ff9f43"],["Star","star","#ffd23f"],["Heart","heart","#ff7eb6"],["Rectangle","rect","#3ec96f"],["Oval","oval","#a06cd5"],["Diamond","diamond","#2a9d8f"]];
+const sets={abc:ABC,num:NUM,col:COL,ani:ANI,shp:SHP};
+const titles={abc:'A B C',num:'1 2 3',col:'Colors',ani:'Animals',shp:'Shapes'};
+
+/* draws a clean bold shape as inline SVG */
+function shapeSVG(type,color){
+  const body={
+    circle:`<circle cx="100" cy="100" r="82"/>`,
+    square:`<rect x="22" y="22" width="156" height="156" rx="14"/>`,
+    rect:`<rect x="12" y="56" width="176" height="88" rx="12"/>`,
+    oval:`<ellipse cx="100" cy="100" rx="88" ry="58"/>`,
+    triangle:`<polygon points="100,18 182,176 18,176"/>`,
+    diamond:`<polygon points="100,14 184,100 100,186 16,100"/>`,
+    star:`<polygon points="100,12 126,74 193,74 139,115 160,180 100,140 40,180 61,115 7,74 74,74"/>`,
+    heart:`<path d="M100,172 C18,112 22,48 62,40 C86,35 100,56 100,66 C100,56 114,35 138,40 C178,48 182,112 100,172 Z"/>`
+  }[type]||'';
+  return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><g fill="${color}" stroke="rgba(0,0,0,.12)" stroke-width="3">${body}</g></svg>`;
+}
 
 function phraseFor(m,i){
   const it=sets[m][i];
   if(m==='abc') return `${it[0]} is for ${it[1]}.`;
   if(m==='num') return `${it[1]}`;
   if(m==='col') return `${it[0]}`;
+  if(m==='shp') return `${it[0]}`;
   return `Hi! I'm a ${it[0]}, and I say ${it[2]}`;
 }
 
@@ -366,6 +418,7 @@ function goHome(){
   if('speechSynthesis' in window) speechSynthesis.cancel();
   if(currentAudio) currentAudio.pause();
   document.getElementById('section').classList.remove('active');
+  document.getElementById('visual').classList.remove('active');
   document.getElementById('home').classList.add('active');
 }
 function applyView(){
@@ -392,6 +445,8 @@ function render(autoSpeak){
     html=`<div class="big glyph" style="color:var(--blue)">${n}</div><div class="countrow">${emo.repeat(n)}</div><div class="word" style="color:var(--blue)">${word}</div>`;}
   else if(mode==='col'){const [name,hex,emo]=set[idx];
     html=`<div class="swatch" style="background:${hex}"></div><div class="word" style="color:${hex==='#f4f4f4'?'#8a7a72':hex}">${name}</div><div style="font-size:clamp(40px,12vw,64px)">${emo}</div>`;}
+  else if(mode==='shp'){const [name,type,color]=set[idx];
+    html=`<div class="shapebox">${shapeSVG(type,color)}</div><div class="word" style="color:${color}">${name}</div>`;}
   else{const [name,emo,sound]=set[idx];
     html=`<div class="big animEmo">${emo}</div><div class="word" style="color:var(--green)">${name}</div><div class="word" style="font-size:clamp(22px,6vw,34px);color:#8a7a72">“${sound}”</div>`;}
   card.innerHTML=html;
@@ -431,6 +486,7 @@ function renderGrid(){
     if(mode==='abc')return `<button class="gtile" onclick="tileTap(${i})"><span class="g-glyph">${item[0]}</span><span class="g-emo">${item[2]}</span><span class="g-lbl">${item[1]}</span></button>`;
     if(mode==='num')return `<button class="gtile" onclick="tileTap(${i})"><span class="g-glyph" style="color:var(--blue)">${item[0]}</span><span class="g-emo">${item[2]}</span><span class="g-lbl">${item[1]}</span></button>`;
     if(mode==='col')return `<button class="gtile" onclick="tileTap(${i})"><span class="g-sw" style="background:${item[1]}"></span><span class="g-lbl">${item[0]}</span></button>`;
+    if(mode==='shp')return `<button class="gtile" onclick="tileTap(${i})"><span class="g-shape">${shapeSVG(item[1],item[2])}</span><span class="g-lbl">${item[0]}</span></button>`;
     return `<button class="gtile" onclick="tileTap(${i})"><span class="g-emo">${item[1]}</span><span class="g-lbl">${item[0]}</span></button>`;
   }).join('');
 }
@@ -442,6 +498,57 @@ function tileTap(i){
     else { t.classList.remove('pop'); void t.offsetWidth; t.classList.add('pop'); }
   }
   speak(phraseFor(mode,idx));
+}
+
+/* ================= Look & Follow (high-contrast visual) ================= */
+const V_PATTERNS=[['bullseye','Bullseye'],['checker','Checker'],['stripes','Stripes'],['spiral','Spiral'],['face','Face'],['star','Star']];
+let visualPattern='bullseye', motion=true;
+function patternSVG(type){
+  const B='#111', W='#fff';
+  let inner='';
+  if(type==='bullseye'){
+    const radii=[100,82,64,46,28,12], cols=[B,W,B,W,B,W];
+    inner=radii.map((r,i)=>`<circle cx="100" cy="100" r="${r}" fill="${cols[i]}"/>`).join('');
+  }else if(type==='checker'){
+    const n=6, sz=200/n; let s='';
+    for(let r=0;r<n;r++)for(let c=0;c<n;c++) s+=`<rect x="${c*sz}" y="${r*sz}" width="${sz}" height="${sz}" fill="${(r+c)%2?B:W}"/>`;
+    inner=s;
+  }else if(type==='stripes'){
+    const n=8, sz=200/n; let s='';
+    for(let c=0;c<n;c++) s+=`<rect x="${c*sz}" y="0" width="${sz}" height="200" fill="${c%2?B:W}"/>`;
+    inner=s;
+  }else if(type==='spiral'){
+    let d='M100,100', a=88/(3.4*2*Math.PI);
+    for(let t=0;t<=3.4*2*Math.PI;t+=0.18){ const r=a*t; d+=` L${(100+r*Math.cos(t)).toFixed(1)},${(100+r*Math.sin(t)).toFixed(1)}`; }
+    inner=`<rect x="0" y="0" width="200" height="200" fill="${W}"/><path d="${d}" fill="none" stroke="${B}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }else if(type==='face'){
+    inner=`<rect x="0" y="0" width="200" height="200" fill="${W}"/><circle cx="100" cy="100" r="92" fill="${B}"/><circle cx="70" cy="82" r="15" fill="${W}"/><circle cx="130" cy="82" r="15" fill="${W}"/><path d="M60,120 Q100,162 140,120" fill="none" stroke="${W}" stroke-width="13" stroke-linecap="round"/>`;
+  }else if(type==='star'){
+    inner=`<rect x="0" y="0" width="200" height="200" fill="${W}"/><polygon points="100,12 126,74 193,74 139,115 160,180 100,140 40,180 61,115 7,74 74,74" fill="${B}"/>`;
+  }
+  return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="${W}"/>${inner}</svg>`;
+}
+function renderVPicker(){
+  document.getElementById('vpicker').innerHTML=V_PATTERNS.map(p=>
+    `<button class="vbtn ${p[0]===visualPattern?'sel':''}" onclick="setPattern('${p[0]}')" title="${p[1]}"><span class="vprev">${patternSVG(p[0])}</span></button>`).join('');
+}
+function setPattern(p){ visualPattern=p; document.getElementById('vtarget').innerHTML=patternSVG(p); renderVPicker(); }
+function toggleMotion(){
+  motion=!motion;
+  document.getElementById('vtarget').classList.toggle('moving',motion);
+  document.getElementById('motIco').textContent=motion?'⏸️':'▶️';
+  document.getElementById('motTxt').textContent=motion?'Pause':'Move';
+}
+function openVisual(){
+  if('speechSynthesis' in window) speechSynthesis.cancel();
+  if(currentAudio) currentAudio.pause();
+  document.getElementById('vtarget').innerHTML=patternSVG(visualPattern);
+  document.getElementById('vtarget').classList.toggle('moving',motion);
+  document.getElementById('motIco').textContent=motion?'⏸️':'▶️';
+  document.getElementById('motTxt').textContent=motion?'Pause':'Move';
+  renderVPicker();
+  document.getElementById('home').classList.remove('active');
+  document.getElementById('visual').classList.add('active');
 }
 
 function openSettings(){ syncSeg(); document.getElementById('overlay').classList.add('open'); }

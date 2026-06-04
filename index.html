@@ -193,17 +193,17 @@
       <div class="setrow">
         <label>Voice type</label>
         <div class="seg" id="engineSeg">
-          <button data-e="hd" class="sel" onclick="setEngine('hd')">Natural HD ✨</button>
-          <button data-e="builtin" onclick="setEngine('builtin')">Built-in · instant</button>
+          <button data-e="hd" onclick="setEngine('hd')">Natural HD ✨</button>
+          <button data-e="builtin" class="sel" onclick="setEngine('builtin')">Built-in · instant</button>
         </div>
         <p class="status" id="hdStatus"></p>
       </div>
-      <div class="setrow" id="hdRow">
+      <div class="setrow" id="hdRow" style="display:none;">
         <label>Natural voice</label>
         <select id="kVoiceSel" onchange="onKVoicePick()"></select>
         <p class="hint">Natural HD downloads a small voice model (~80MB) the first time, then works offline. Needs a modern browser; best on a computer or newer phone. If it can't load, the built-in voice is used automatically.</p>
       </div>
-      <div class="setrow" id="builtinRow" style="display:none;">
+      <div class="setrow" id="builtinRow">
         <label>Built-in voice</label>
         <select id="voiceSel" onchange="onVoicePick()"></select>
         <p class="hint">Tip: download an "Enhanced"/"Natural" voice in your device's settings and it will appear here.</p>
@@ -375,7 +375,7 @@ async function speakHD(text){
 }
 
 /* ================= dispatcher ================= */
-let engine='hd';   /* natural voice is the default */
+let engine='builtin';
 function speak(text){
   if('speechSynthesis' in window) speechSynthesis.cancel();
   if(currentAudio) currentAudio.pause();
@@ -448,7 +448,7 @@ function render(autoSpeak){
   else if(mode==='shp'){const [name,type,color]=set[idx];
     html=`<div class="shapebox">${shapeSVG(type,color)}</div><div class="word" style="color:${color}">${name}</div>`;}
   else{const [name,emo,sound]=set[idx];
-    html=`<div class="big animEmo">${emo}</div><div class="word" style="color:var(--green)">${name}</div><div class="word" style="font-size:clamp(22px,6vw,34px);color:#8a7a72">“${sound}”</div>`;}
+    html=`<div class="big animEmo">${emo}</div><div class="word" style="color:var(--green)">${name}</div><div class="word" style="font-size:clamp(22px,6vw,34px);color:#8a7a72">"${sound}"</div>`;}
   card.innerHTML=html;
   card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
   document.getElementById('counter').textContent=(idx+1)+' / '+set.length;
@@ -555,7 +555,7 @@ function openSettings(){ syncSeg(); document.getElementById('overlay').classList
 function closeSettings(){ document.getElementById('overlay').classList.remove('open'); }
 document.getElementById('overlay').addEventListener('click',e=>{ if(e.target.id==='overlay') closeSettings(); });
 
-/* ---------- startup: preload natural voice + show loading splash ---------- */
+/* ---------- startup ---------- */
 window.addEventListener('load',()=>{
   if(engine==='hd' && kokoroState==='idle'){ showLoadScreen(); loadKokoro(); }
 });

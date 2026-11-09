@@ -89,6 +89,26 @@
   .vprev{width:44px;height:44px;display:block;border-radius:10px;overflow:hidden;}
   .vprev svg{width:100%;height:100%;display:block;}
 
+  /* tappable target + insects that get squished */
+  .vtarget{cursor:pointer;touch-action:manipulation;}
+  .vemo{font-size:clamp(110px,34vw,220px);line-height:1;text-align:center;animation:wiggle 1.2s ease-in-out infinite;filter:drop-shadow(0 8px 8px rgba(0,0,0,.2));}
+  #bugs{position:absolute;inset:0;display:none;pointer-events:none;overflow:hidden;}
+  .bug{position:absolute;left:0;top:0;cursor:pointer;touch-action:manipulation;pointer-events:auto;}
+  .bug.spawn .vemo{animation:spawnin .45s ease;}
+  .bug.squashed{pointer-events:none;}
+  .bug.squashed .vemo{animation:squash .9s ease-out forwards;}
+  .bug .vemo{display:block;line-height:1;}
+  .vtarget.spawn .vemo{animation:spawnin .45s ease;}
+  @keyframes spawnin{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.2) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+  .vtarget.squashed{pointer-events:none;}
+  .vtarget.squashed .vemo{animation:squash .9s ease-out forwards;}
+  @keyframes squash{0%{transform:scale(1)}25%{transform:scale(1.5,.35)}45%{transform:scale(1.35,.2)}85%{transform:scale(1.35,.14);opacity:1}100%{transform:scale(1.35,.12);opacity:0}}
+  .vtarget.tapped svg{animation:spinpop .6s ease;}
+  @keyframes spinpop{0%{transform:scale(1) rotate(0)}50%{transform:scale(1.35) rotate(180deg)}100%{transform:scale(1) rotate(360deg)}}
+  .vsplat{position:absolute;width:150px;height:110px;transform:translate(-50%,-50%) scale(.2);pointer-events:none;border-radius:50%;animation:splat 1.4s ease-out forwards;}
+  @keyframes splat{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}15%{opacity:.95;transform:translate(-50%,-50%) scale(1.25,.9)}70%{opacity:.8;transform:translate(-50%,-50%) scale(1.3,.85)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.35,.85)}}
+  .vprev.emo{display:flex;align-items:center;justify-content:center;font-size:32px;line-height:1;}
+
   .gridwrap{flex:1;overflow-y:auto;padding:6px 16px 24px;-webkit-overflow-scrolling:touch;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:14px;max-width:640px;margin:0 auto;}
   .gtile{background:#fff;border:none;font-family:inherit;cursor:pointer;border-radius:26px;padding:14px 6px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 7px 0 rgba(0,0,0,.1),0 10px 18px rgba(0,0,0,.12);transition:transform .1s ease,box-shadow .1s ease;position:relative;}
@@ -150,6 +170,16 @@
   .gsongs button:active{transform:translateY(4px);box-shadow:none;}
   .gsongs button.sel{background:var(--green);color:#fff;}
 
+  .menu{width:80%;max-width:none;}
+  #nursery .menu{align-content:start;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));}
+  .t-fru{background:linear-gradient(160deg,#ff5a5f,#ff9f43);}
+  .t-veg{background:linear-gradient(160deg,#7bd36b,#3ec96f);}
+  .t-veh{background:linear-gradient(160deg,#4d9de0,#2a9d8f);}
+  .t-bod{background:linear-gradient(160deg,#ffb38a,#ff7eb6);}
+  .t-fel{background:linear-gradient(160deg,#ffd23f,#ff7eb6);}
+  .t-sea{background:linear-gradient(160deg,#2ec4e6,#4361ee);}
+  .t-wea{background:linear-gradient(160deg,#8ecbff,#a06cd5);}
+  .t-ins{background:linear-gradient(160deg,#a06cd5,#ff5a5f);}
   .t-nur{background:linear-gradient(160deg,#ff7eb6,#ffd23f);}
   .t-sci{background:linear-gradient(160deg,#2a9d8f,#4d9de0);}
   #game.locked .bar,#game.locked .gsongs{display:none;}
@@ -157,7 +187,10 @@
   .gsongs.gthemes button.sel{background:var(--purple);}
   #game.locked .gstage{margin:0;border-radius:0;}
   .unlockbtn{display:none;position:absolute;top:10px;right:10px;z-index:6;border:none;overflow:hidden;font-family:inherit;font-weight:600;font-size:13px;color:#fff;background:rgba(255,255,255,.16);padding:10px 14px;border-radius:16px;cursor:pointer;touch-action:none;}
-  #game.locked .unlockbtn{display:block;}
+  #game.locked .unlockbtn,#visual.locked .unlockbtn{display:block;}
+  #visual.locked .bar,#visual.locked .vcaption,#visual.locked .vpicker{display:none;}
+  #visual.locked .vstage{margin:0;border-radius:0;}
+  #visual .unlockbtn{background:rgba(58,46,42,.35);}
   .unlockbtn .ufill{position:absolute;left:0;top:0;bottom:0;width:0%;background:rgba(62,201,111,.7);}
   .unlockbtn .ufill.go{width:100%;transition:width 2s linear;}
   .unlockbtn .utxt{position:relative;}
@@ -193,6 +226,14 @@
       <button class="tile t-ani" onclick="openSection('ani')"><span class="emo">🐾</span><span class="lbl">Animals</span></button>
       <button class="tile t-shp" onclick="openSection('shp')"><span class="emo">🔷</span><span class="lbl">Shapes</span></button>
       <button class="tile t-look" onclick="openVisual()"><span class="emo">👀</span><span class="lbl">Look &amp; Follow</span></button>
+      <button class="tile t-fru" onclick="openSection('fru')"><span class="emo">🍎</span><span class="lbl">Fruits</span></button>
+      <button class="tile t-veg" onclick="openSection('veg')"><span class="emo">🥕</span><span class="lbl">Veggies</span></button>
+      <button class="tile t-veh" onclick="openSection('veh')"><span class="emo">🚗</span><span class="lbl">Vehicles</span></button>
+      <button class="tile t-bod" onclick="openSection('bod')"><span class="emo">🖐️</span><span class="lbl">My Body</span></button>
+      <button class="tile t-fel" onclick="openSection('fel')"><span class="emo">😀</span><span class="lbl">Feelings</span></button>
+      <button class="tile t-sea" onclick="openSection('sea')"><span class="emo">🐙</span><span class="lbl">Sea Life</span></button>
+      <button class="tile t-wea" onclick="openSection('wea')"><span class="emo">🌦️</span><span class="lbl">Weather</span></button>
+      <button class="tile t-ins" onclick="openSection('ins')"><span class="emo">🥁</span><span class="lbl">Instruments</span></button>
     </div>
   </section>
 
@@ -219,9 +260,12 @@
       <button class="back" onclick="goBack()">⬅</button>
       <h2>Look &amp; Follow</h2>
       <button class="viewtoggle" onclick="toggleMotion()"><span class="vt-ico" id="motIco">⏸️</span><span id="motTxt">Pause</span></button>
+      <button class="viewtoggle" onclick="lockVisual()"><span class="vt-ico">⛶</span><span>Full screen</span></button>
     </div>
-    <div class="vstage" id="vstage"><div class="vtarget moving" id="vtarget"></div></div>
-    <p class="vcaption">Hold baby about 20–30&nbsp;cm away. Bold black-and-white patterns help develop newborn eyesight 👶</p>
+    <div class="vstage" id="vstage"><div class="vtarget moving" id="vtarget"></div><div id="bugs"></div>
+      <button class="unlockbtn" aria-label="Hold to exit"><span class="ufill"></span><span class="utxt">🔒 Hold to exit</span></button>
+    </div>
+    <p class="vcaption" id="vcap">Hold baby about 20–30&nbsp;cm away. Bold black-and-white patterns help develop newborn eyesight 👶</p>
     <div class="vpicker" id="vpicker"></div>
   </section>
 
@@ -300,8 +344,19 @@ const NUM=[[1,"one","🍓"],[2,"two","🐤"],[3,"three","🎈"],[4,"four","🍪"
 const COL=[["Red","#ff3b30","🍎"],["Orange","#ff9500","🍊"],["Yellow","#ffcc00","🌟"],["Green","#34c759","🐸"],["Blue","#0a84ff","🌊"],["Purple","#af52de","🍇"],["Pink","#ff6eb4","🌸"],["Brown","#a05a2c","🐻"],["Black","#2b2b2b","🐧"],["White","#f4f4f4","☁️"]];
 const ANI=[["Dog","🐶","Woof woof! Awooo!"],["Cat","🐱","Meow! Purr, purr."],["Cow","🐮","Moooo! Moooo!"],["Duck","🦆","Quack quack quack!"],["Sheep","🐑","Baaaa! Baaa!"],["Lion","🦁","Roarrr! Grrr!"],["Pig","🐷","Oink oink! Snort snort!"],["Frog","🐸","Ribbit! Croak, croak!"],["Bee","🐝","Bzzzz! Buzz buzz!"],["Horse","🐴","Neigh! Neighhh!"],["Owl","🦉","Hoo hoo! Whooo!"],["Chicken","🐔","Cluck cluck! Bawk bawk!"]];
 const SHP=[["Circle","circle","#ff5a5f"],["Square","square","#4d9de0"],["Triangle","triangle","#ff9f43"],["Star","star","#ffd23f"],["Heart","heart","#ff7eb6"],["Rectangle","rect","#3ec96f"],["Oval","oval","#a06cd5"],["Diamond","diamond","#2a9d8f"]];
-const sets={abc:ABC,num:NUM,col:COL,ani:ANI,shp:SHP};
-const titles={abc:'A B C',num:'1 2 3',col:'Colors',ani:'Animals',shp:'Shapes'};
+/* simple picture + word lessons: [name, emoji] */
+const FRU=[["Apple","🍎"],["Banana","🍌"],["Orange","🍊"],["Grapes","🍇"],["Strawberry","🍓"],["Watermelon","🍉"],["Pineapple","🍍"],["Mango","🥭"],["Peach","🍑"],["Cherries","🍒"]];
+const VEG=[["Carrot","🥕"],["Corn","🌽"],["Broccoli","🥦"],["Tomato","🍅"],["Potato","🥔"],["Onion","🧅"],["Eggplant","🍆"],["Cucumber","🥒"]];
+const VEH=[["Car","🚗"],["Bus","🚌"],["Bicycle","🚲"],["Airplane","✈️"],["Train","🚂"],["Ship","🚢"],["Helicopter","🚁"],["Fire truck","🚒"],["Ambulance","🚑"],["Tractor","🚜"]];
+const BOD=[["Eyes","👀"],["Ear","👂"],["Nose","👃"],["Mouth","👄"],["Tongue","👅"],["Tooth","🦷"],["Hand","✋"],["Arm","💪"],["Leg","🦵"],["Foot","🦶"]];
+const FEL=[["Happy","😀"],["Sad","😢"],["Angry","😠"],["Sleepy","😴"],["Surprised","😮"],["Scared","😨"],["Loved","🥰"],["Hungry","😋"]];
+const SEA=[["Fish","🐠"],["Dolphin","🐬"],["Whale","🐳"],["Octopus","🐙"],["Crab","🦀"],["Turtle","🐢"],["Shark","🦈"],["Squid","🦑"],["Shell","🐚"]];
+const WEA=[["Sunny","☀️"],["Cloudy","☁️"],["Rainy","🌧️"],["Stormy","⛈️"],["Snowy","❄️"],["Windy","💨"],["Rainbow","🌈"],["Night","🌙"]];
+const INS=[["Drum","🥁"],["Guitar","🎸"],["Piano","🎹"],["Trumpet","🎺"],["Violin","🎻"],["Saxophone","🎷"],["Accordion","🪗"],["Bell","🔔"]];
+const sets={abc:ABC,num:NUM,col:COL,ani:ANI,shp:SHP,fru:FRU,veg:VEG,veh:VEH,bod:BOD,fel:FEL,sea:SEA,wea:WEA,ins:INS};
+const PIC=['fru','veg','veh','bod','fel','sea','wea','ins'];
+const titles={abc:'A B C',num:'1 2 3',col:'Colors',ani:'Animals',shp:'Shapes',fru:'Fruits',veg:'Veggies',veh:'Vehicles',bod:'My Body',fel:'Feelings',sea:'Sea Life',wea:'Weather',ins:'Instruments'};
+const PIC_COLOR={fru:'#ff5a5f',veg:'#3ec96f',veh:'#4d9de0',bod:'#ff7eb6',fel:'#ff9f43',sea:'#4361ee',wea:'#a06cd5',ins:'#ff5a5f'};
 
 /* draws a clean bold shape as inline SVG */
 function shapeSVG(type,color){
@@ -324,6 +379,7 @@ function phraseFor(m,i){
   if(m==='num') return `${it[1]}`;
   if(m==='col') return `${it[0]}`;
   if(m==='shp') return `${it[0]}`;
+  if(PIC.includes(m)) return m==='fel' ? `I feel ${it[0].toLowerCase()}` : `${it[0]}`;
   return `Hi! I'm a ${it[0]}, and I say ${it[2]}`;
 }
 
@@ -518,6 +574,8 @@ function render(autoSpeak){
     html=`<div class="swatch" style="background:${hex}"></div><div class="word" style="color:${hex==='#f4f4f4'?'#8a7a72':hex}">${name}</div><div style="font-size:clamp(40px,12vw,64px)">${emo}</div>`;}
   else if(mode==='shp'){const [name,type,color]=set[idx];
     html=`<div class="shapebox">${shapeSVG(type,color)}</div><div class="word" style="color:${color}">${name}</div>`;}
+  else if(PIC.includes(mode)){const [name,emo]=set[idx];
+    html=`<div class="big">${emo}</div><div class="word" style="color:${PIC_COLOR[mode]}">${name}</div>`;}
   else{const [name,emo,sound]=set[idx];
     html=`<div class="big animEmo">${emo}</div><div class="word" style="color:var(--green)">${name}</div><div class="word" style="font-size:clamp(22px,6vw,34px);color:#8a7a72">"${sound}"</div>`;}
   card.innerHTML=html;
@@ -572,8 +630,117 @@ function tileTap(i){
 }
 
 /* ================= Look & Follow (high-contrast visual) ================= */
-const V_PATTERNS=[['bullseye','Bullseye'],['checker','Checker'],['stripes','Stripes'],['spiral','Spiral'],['face','Face'],['star','Star']];
-let visualPattern='bullseye', motion=true;
+const V_PATTERNS=[['insects','Bugs'],['bullseye','Bullseye'],['checker','Checker'],['stripes','Stripes'],['spiral','Spiral'],['face','Face'],['star','Star']];
+let visualPattern='insects', motion=true, curBug=0;
+const INSECTS=[['🐞','#ff5a5f'],['🦋','#4d9de0'],['🐝','#ffd23f'],['🐜','#a05a2c'],['🐛','#3ec96f'],['🦗','#7bd36b'],['🪲','#2a9d8f'],['🕷️','#a06cd5'],['🪰','#8a7a72'],['🦟','#ff9f43']];
+const CAP_PATTERN='Hold baby about 20–30 cm away. Bold black-and-white patterns help develop newborn eyesight 👶 Tap the pattern to pop it!';
+const CAP_BUGS='Tap the bugs to squish them! 👆 New ones keep crawling in 🐞';
+/* ---- several bugs crawling around, each tappable ---- */
+const BUG_COUNT=6;
+let bugs=[], bugRAF=0, bugLast=0;
+const visualActive=()=>document.getElementById('visual').classList.contains('active');
+function bugSize(){ const s=document.getElementById('vstage'); return Math.max(64,Math.min(120,Math.min(s.clientWidth,s.clientHeight)*.2)); }
+function spawnBug(){
+  const stage=document.getElementById('vstage'), layer=document.getElementById('bugs');
+  const kind=INSECTS[Math.floor(Math.random()*INSECTS.length)], size=bugSize();
+  const sp=rnd(45,120), a=rnd(0,6.283);
+  const b={x:rnd(0,Math.max(1,stage.clientWidth-size)),y:rnd(0,Math.max(1,stage.clientHeight-size)),vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,size,dead:false,color:kind[1]};
+  const el=document.createElement('div'); el.className='bug spawn';
+  el.innerHTML=`<span class="vemo" style="font-size:${size}px;animation-delay:${rnd(0,1).toFixed(2)}s">${kind[0]}</span>`;
+  el.style.width=el.style.height=size+'px';
+  el.style.transform=`translate(${b.x}px,${b.y}px)`;
+  el.addEventListener('pointerdown',e=>squishBug(e,b));
+  layer.appendChild(el); b.el=el; bugs.push(b);
+  setTimeout(()=>el.classList.remove('spawn'),500);
+}
+function startBugs(){
+  stopBugs();
+  document.getElementById('bugs').style.display='block';
+  for(let i=0;i<BUG_COUNT;i++) spawnBug();
+  bugLast=performance.now(); bugRAF=requestAnimationFrame(bugLoop);
+}
+function stopBugs(){
+  cancelAnimationFrame(bugRAF); bugRAF=0;
+  const l=document.getElementById('bugs'); l.innerHTML=''; l.style.display='none'; bugs=[];
+}
+function bugLoop(now){
+  if(!visualActive()||visualPattern!=='insects'){ bugRAF=0; return; }
+  const dt=Math.min(.05,(now-bugLast)/1000); bugLast=now;
+  const stage=document.getElementById('vstage'), W=stage.clientWidth, H=stage.clientHeight;
+  if(motion) bugs.forEach(b=>{
+    if(b.dead) return;
+    b.x+=b.vx*dt; b.y+=b.vy*dt;
+    const mx=Math.max(0,W-b.size), my=Math.max(0,H-b.size);
+    if(b.x<0){b.x=0;b.vx=Math.abs(b.vx);} else if(b.x>mx){b.x=mx;b.vx=-Math.abs(b.vx);}
+    if(b.y<0){b.y=0;b.vy=Math.abs(b.vy);} else if(b.y>my){b.y=my;b.vy=-Math.abs(b.vy);}
+    b.el.style.transform=`translate(${b.x}px,${b.y}px)`;
+  });
+  bugRAF=requestAnimationFrame(bugLoop);
+}
+function squishBug(e,b){
+  e.preventDefault(); e.stopPropagation();
+  if(b.dead) return; b.dead=true;
+  const stage=document.getElementById('vstage');
+  b.el.classList.add('squashed');
+  const cx=b.x+b.size/2, cy=b.y+b.size/2, c=b.color;
+  const s=document.createElement('div'); s.className='vsplat';
+  s.style.left=cx+'px'; s.style.top=(cy+b.size*.1)+'px';
+  s.style.background=`radial-gradient(circle at 30% 40%,${c} 0 22%,transparent 24%),radial-gradient(circle at 70% 55%,${c} 0 26%,transparent 28%),radial-gradient(circle at 50% 50%,${c} 0 45%,transparent 70%)`;
+  stage.appendChild(s); setTimeout(()=>s.remove(),1500);
+  squishSound(); celebrate(stage);
+  setTimeout(()=>{
+    b.el.remove(); bugs=bugs.filter(x=>x!==b);
+    if(visualActive()&&visualPattern==='insects') spawnBug();
+  },1000);
+}
+function showTarget(){
+  const t=document.getElementById('vtarget');
+  t.classList.remove('squashed','tapped');
+  t.style.left=''; t.style.top='';
+  if(visualPattern==='insects'){
+    t.style.display='none'; t.innerHTML=''; startBugs();
+  }else{
+    stopBugs(); t.style.display='';
+    t.innerHTML=patternSVG(visualPattern); t.classList.remove('insect');
+  }
+  t.classList.toggle('moving',motion);
+  document.getElementById('vcap').textContent=visualPattern==='insects'?CAP_BUGS:CAP_PATTERN;
+}
+function squishSound(){
+  const ctx=audioCtx(); if(!ctx) return; const t=ctx.currentTime;
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  o.type='sine'; o.frequency.setValueAtTime(380,t); o.frequency.exponentialRampToValueAtTime(70,t+.22);
+  g.gain.setValueAtTime(.5,t); g.gain.exponentialRampToValueAtTime(.001,t+.25);
+  o.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t+.3);
+  const len=Math.floor(ctx.sampleRate*.18), buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len);
+  const ns=ctx.createBufferSource(), lp=ctx.createBiquadFilter(), ng=ctx.createGain();
+  lp.type='lowpass'; lp.frequency.value=900; ng.gain.value=.5;
+  ns.buffer=buf; ns.connect(lp); lp.connect(ng); ng.connect(ctx.destination); ns.start(t);
+}
+function targetTap(e){
+  e.preventDefault();
+  const t=document.getElementById('vtarget'), stage=document.getElementById('vstage');
+  if(t.classList.contains('squashed')) return;
+  if(visualPattern==='insects'){
+    const sr=stage.getBoundingClientRect(), tr=t.getBoundingClientRect();
+    const cx=tr.left-sr.left+tr.width/2, cy=tr.top-sr.top+tr.height/2;
+    t.classList.remove('moving'); t.style.left=cx+'px'; t.style.top=cy+'px';
+    t.classList.add('squashed');
+    const s=document.createElement('div'); s.className='vsplat';
+    const c=INSECTS[curBug][1];
+    s.style.left=cx+'px'; s.style.top=(cy+tr.height*.1)+'px';
+    s.style.background=`radial-gradient(circle at 30% 40%,${c} 0 22%,transparent 24%),radial-gradient(circle at 70% 55%,${c} 0 26%,transparent 28%),radial-gradient(circle at 50% 50%,${c} 0 45%,transparent 70%)`;
+    stage.appendChild(s); setTimeout(()=>s.remove(),1500);
+    squishSound(); celebrate(stage);
+    setTimeout(()=>{ if(document.getElementById('visual').classList.contains('active')) showTarget(); },1100);
+  }else{
+    t.classList.remove('tapped'); void t.offsetWidth; t.classList.add('tapped');
+    playPiano([0,2,4,7,9,12,14][Math.floor(Math.random()*7)]); celebrate(stage);
+    setTimeout(()=>t.classList.remove('tapped'),650);
+  }
+}
+document.getElementById('vtarget').addEventListener('pointerdown',targetTap);
 function patternSVG(type){
   const B='#111', W='#fff';
   let inner='';
@@ -601,9 +768,9 @@ function patternSVG(type){
 }
 function renderVPicker(){
   document.getElementById('vpicker').innerHTML=V_PATTERNS.map(p=>
-    `<button class="vbtn ${p[0]===visualPattern?'sel':''}" onclick="setPattern('${p[0]}')" title="${p[1]}"><span class="vprev">${patternSVG(p[0])}</span></button>`).join('');
+    `<button class="vbtn ${p[0]===visualPattern?'sel':''}" onclick="setPattern('${p[0]}')" title="${p[1]}">${p[0]==='insects'?'<span class="vprev emo">🐞</span>':`<span class="vprev">${patternSVG(p[0])}</span>`}</button>`).join('');
 }
-function setPattern(p){ visualPattern=p; document.getElementById('vtarget').innerHTML=patternSVG(p); renderVPicker(); }
+function setPattern(p){ visualPattern=p; showTarget(); renderVPicker(); }
 function toggleMotion(){
   motion=!motion;
   document.getElementById('vtarget').classList.toggle('moving',motion);
@@ -613,8 +780,7 @@ function toggleMotion(){
 function openVisual(){
   if('speechSynthesis' in window) speechSynthesis.cancel();
   if(currentAudio) currentAudio.pause();
-  document.getElementById('vtarget').innerHTML=patternSVG(visualPattern);
-  document.getElementById('vtarget').classList.toggle('moving',motion);
+  showTarget();
   document.getElementById('motIco').textContent=motion?'⏸️':'▶️';
   document.getElementById('motTxt').textContent=motion?'Pause':'Move';
   renderVPicker();
@@ -788,30 +954,32 @@ document.getElementById('gstage').addEventListener('pointerdown',gameTap);
 /* full screen + lock: kid can't leave; grown-up holds the corner button 2s to exit */
 let holdT=null;
 function fsEl(){ return document.fullscreenElement||document.webkitFullscreenElement; }
-function lockGame(){
-  document.getElementById('game').classList.add('locked');
+function lockVisual(){ lockGame('visual'); }
+function lockGame(id){
+  document.getElementById(typeof id==='string'?id:'game').classList.add('locked');
   const el=document.documentElement, rq=el.requestFullscreen||el.webkitRequestFullscreen;
   if(rq){ try{ const p=rq.call(el); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
   setTimeout(()=>{ if(gameOn) fwSize(); },300);
 }
 function unlockGame(){
   document.getElementById('game').classList.remove('locked');
+  document.getElementById('visual').classList.remove('locked');
   if(fsEl()){ const ex=document.exitFullscreen||document.webkitExitFullscreen; try{ const p=ex.call(document); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
   setTimeout(()=>{ if(gameOn) fwSize(); },300);
 }
 function fsChange(){
   /* if the system leaves full screen (e.g. Esc / swipe), leave locked mode too */
-  if(!fsEl()) document.getElementById('game').classList.remove('locked');
+  if(!fsEl()){ document.getElementById('game').classList.remove('locked'); document.getElementById('visual').classList.remove('locked'); }
   setTimeout(()=>{ if(gameOn) fwSize(); },300);
 }
 document.addEventListener('fullscreenchange',fsChange);
 document.addEventListener('webkitfullscreenchange',fsChange);
-(function(){
-  const b=document.getElementById('unlockBtn'), f=document.getElementById('ufill');
+document.querySelectorAll('.unlockbtn').forEach(b=>{
+  const f=b.querySelector('.ufill');
   const stop=()=>{ clearTimeout(holdT); f.classList.remove('go'); };
   b.addEventListener('pointerdown',e=>{ e.stopPropagation(); e.preventDefault(); f.classList.add('go'); holdT=setTimeout(()=>{ stop(); unlockGame(); },2000); });
   ['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,stop));
-})();
+});
 window.addEventListener('resize',()=>{ if(gameOn) fwSize(); });
 
 function openSettings(){ syncSeg(); document.getElementById('overlay').classList.add('open'); }
